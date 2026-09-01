@@ -20,3 +20,8 @@ Route::post('/triagem', [TriagemController::class, 'store'])->name('triagem.stor
 // Rota de demandas e estoque (módulo de gestão da instituição)
 Route::get('/painel', [InstituicaoController::class, 'dashboard'])->name('instituicao.dashboard');
 Route::delete('/painel/despachar/{id}', [InstituicaoController::class, 'despachar'])->name('instituicao.despachar');
+
+//rota temp
+Route::get('/teste-deploy', function () {
+    return view('teste-deploy');
+});
