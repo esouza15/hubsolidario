@@ -1,30 +1,24 @@
 #!/bin/bash
 set -e
 
-echo "Iniciando Deploy do HubSolidário..."
-
-# 1. Ativa o modo de manutenção do Laravel
-php artisan down || true
-
-# 2. Sincroniza o código mais recente da branch main
+echo "Iniciando sincronizacao do codigo..."
+# 1. Busca as atualizacoes do repositorio remoto
 git fetch origin main
+
+# 2. Sincroniza o codigo local exatamente com origin/main
 git reset --hard origin/main
 
-# 3. Instala/atualiza dependências do Composer para produção
+echo "Atualizando dependencias..."
 composer install --no-interaction --prefer-dist --optimize-autoloader --no-dev
 
-# 4. Executa migrações no banco de dados de produção (ACID)
+echo "Executando migrations..."
+# 3. Executa as migrations no banco de producao
 php artisan migrate --force
 
-# 5. Otimiza caches de configuração, rotas e visões Blade
-php artisan config:cache
-php artisan route:cache
-php artisan view:cache
+echo "Limpando caches do Laravel..."
+# 4. Remove caches de config, rotas e views
+php artisan optimize:clear
 
-# 6. Garante permissões adequadas de escrita
-chmod -R 775 storage bootstrap/cache
-
-# 7. Desativa o modo de manutenção
-php artisan up
-
-echo "Deploy concluído com sucesso em hubsolidario.remotoagencia.com.br!"
+# 5. Exibicao do commit instalado
+echo "Deploy finalizado. Commit atual:"
+git log -1 --oneline

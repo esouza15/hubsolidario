@@ -1,4 +1,4 @@
-name: CI/CD Pipeline - Deploy cPanel
+name: Deploy HubSolidario
 
 on:
   push:
@@ -7,20 +7,17 @@ on:
 
 jobs:
   deploy:
-    name: Deploy to Production (cPanel)
+    name: Deploy para hospedagem
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout do Repositório
-        uses: actions/checkout@v4
-
-      - name: Executar Deploy via SSH no Servidor
-        uses: appleboy/ssh-action@v1.0.3
+      - name: Executar deploy via SSH
+        uses: appleboy/ssh-action@v1.2.0
         with:
           host: ${{ secrets.SSH_HOST }}
-          username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 22 }}
+          username: ${{ secrets.SSH_USER }}
+          port: ${{ secrets.SSH_PORT }}
+          key: ${{ secrets.SSH_KEY }}
           script: |
-            cd ${{ secrets.REMOTE_PROJECT_PATH }}
-            bash deploy.sh
+            cd /home/remotoagenciaco/hubsolidario.remotoagencia.com.br
+            ./deploy.sh
