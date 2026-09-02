@@ -3,7 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>{{ $title ?? 'HubSolidário' }}</title>
+    <meta name="theme-color" content="#16a34a">
+    <meta name="mobile-web-app-capable" content="yes">
+
+    <!-- Definições para Apple / iOS -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="HubSolidário">
+    <link rel="apple-touch-icon" href="/icons/icon-192.png">
+
+    <!-- Vínculo com o Manifesto Web -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!-- <title>{{ $title ?? 'HubSolidário' }}</title> -->
 
     <!-- Tailwind CSS via CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -97,6 +109,14 @@
 
     <script>
         lucide.createIcons();
+
+        if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/sw.js')
+                .then((reg) => console.log('PWA Service Worker registrado com sucesso:', reg.scope))
+                .catch((err) => console.error('Falha no registro do Service Worker:', err));
+        });
+    }
     </script>
 </body>
 </html>

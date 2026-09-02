@@ -1,5 +1,6 @@
 /vendor
 /node_modules
+/erros
 .env
 .env.backup
 .phpunit.result.cache
