@@ -14,9 +14,20 @@ class DoadorController extends Controller
     public function index()
     {
         $instituicoes = Instituicao::all();
-        // Carrega último doador para facilitar simulação de preenchimento
-        $doador = Doador::latest('id_doador')->first();
-        $historico = Doacao::with('itens')->latest('id_doacao')->take(5)->get();
+        $doador = null;
+        $historico = collect();
+
+        // Isolamento de Privacidade: Carrega doador e histórico APENAS da sessão deste dispositivo
+        if (session()->has('doador_id')) {
+            $doador = Doador::find(session('doador_id'));
+            if ($doador) {
+                $historico = Doacao::where('id_doador', $doador->id_doador)
+                    ->with('itens')
+                    ->latest('id_doacao')
+                    ->take(5)
+                    ->get();
+            }
+        }
 
         return view('doador.index', compact('instituicoes', 'doador', 'historico'));
     }
@@ -32,7 +43,8 @@ class DoadorController extends Controller
             'id_instituicao' => 'required|exists:tb_instituicao,id_instituicao',
         ]);
 
-        DB::transaction(function () use ($validated) {
+        $doador = null;
+        DB::transaction(function () use ($validated, &$doador) {
             // 1. Cadastra ou recupera o doador pelo email (Cadastro Simplificado)
             $doador = Doador::firstOrCreate(
                 ['email' => $validated['email']],
@@ -56,6 +68,11 @@ class DoadorController extends Controller
                 'local_destino' => 'Ponto de Coleta Principal',
             ]);
         });
+
+        // Salva o ID do doador APENAS na sessão atual deste dispositivo
+        if ($doador) {
+            session(['doador_id' => $doador->id_doador]);
+        }
 
         return redirect()->route('doador.index')->with('success', 'Intenção de doação registrada com sucesso! Obrigado pelo apoio.');
     }
