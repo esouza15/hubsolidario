@@ -16,6 +16,17 @@ return new class extends Migration
             $table->string('responsavel', 100);
             $table->timestamps();
         });
+
+        // Inserção automática de dados essenciais (Data Seeding de Sistema)
+        DB::table('tb_instituicao')->insertOrIgnore([
+            'id_instituicao'   => 1,
+            'nome_instituicao' => 'Instituto Musical e Artístico Sol do Pantanal',
+            'endereco'         => 'Rua Albert Sabin, 662 - Vila Taveirópolis, Campo Grande/MS',
+            'telefone'         => '6733214589',
+            'responsavel'      => 'Maestro e Diretoria Comunitária',
+            'created_at'       => now(),
+            'updated_at'       => now(),
+        ]);
     }
 
     public function down(): void
