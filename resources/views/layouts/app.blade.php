@@ -88,8 +88,8 @@
             
             <!-- Aba 1: Doações / Recebidas (Doador) -->
             <a href="{{ route('doador.index') }}" class="flex flex-col items-center justify-center py-1 rounded-xl transition {{ request()->routeIs('doador.*') ? 'text-brand-600 font-black' : 'text-slate-500 hover:text-slate-800 font-semibold' }}">
-                <i data-lucide="inbox" class="w-6 h-6 mb-1"></i>
-                <span class="text-xs">Recebidas</span>
+                <i data-lucide="hand-heart" class="w-6 h-6 mb-1"></i>
+                <span class="text-xs">Doar</span>
             </a>
 
             <!-- Aba 2: Triagem Rápida (Voluntário) -->

@@ -69,7 +69,7 @@
             <div class="grid grid-cols-3 gap-2 sm:gap-3">
                 @php
                     $tipos = [
-                        ['val' => 'Agasalho', 'label' => 'Agasalho', 'icon' => 'shirt', 'tag' => 'Urgente'],
+                        ['val' => 'Agasalho', 'label' => 'Roupa', 'icon' => 'shirt', 'tag' => 'Urgente'],
                         ['val' => 'Alimento Não Perecível', 'label' => 'Alimento', 'icon' => 'utensils', 'tag' => 'Crítico'],
                         ['val' => 'Calçado', 'label' => 'Calçado', 'icon' => 'footprints', 'tag' => null],
                     ];
@@ -94,6 +94,29 @@
         <div>
             <label class="block text-xs font-semibold text-slate-700 mb-1">Descrição / Quantidade Estimada</label>
             <input type="text" name="subcategoria" required placeholder="Ex: 2 jaquetas de moletom, 5kg de arroz" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-sm font-medium text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+        </div>
+
+        <!-- Agendamento Logístico (Estágio Intermediário) -->
+        <div class="space-y-3 pt-1">
+            <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
+                <i data-lucide="calendar" class="w-4 h-4 text-brand-600"></i>
+                Agendamento de Entrega / Coleta
+            </h3>
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Data Preferencial</label>
+                    <input type="date" name="data_agendamento" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-sm font-medium text-slate-900 focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold text-slate-700 mb-1">Horário / Turno</label>
+                    <select name="horario_agendamento" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-xs sm:text-sm font-semibold text-slate-800 focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
+                        <option value="">Selecione o turno (Opcional)</option>
+                        <option value="Manhã (08:00 às 12:00)">Manhã (08:00 às 12:00)</option>
+                        <option value="Tarde (13:00 às 17:00)">Tarde (13:00 às 17:00)</option>
+                        <option value="Noite (18:00 às 20:00)">Noite (18:00 às 20:00)</option>
+                    </select>
+                </div>
+            </div>
         </div>
 
         <!-- Ponto de Coleta com Match -->
@@ -127,19 +150,48 @@
             </h3>
             <div class="space-y-2.5">
                 @foreach($historico as $item)
-                    <div class="flex items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-100 gap-2">
+                    <div class="flex flex-col sm:flex-row sm:items-center justify-between p-3.5 rounded-2xl bg-slate-50 border border-slate-100 gap-3">
                         <div class="flex items-center gap-3 min-w-0">
                             <div class="w-9 h-9 rounded-xl bg-white border border-slate-200 flex items-center justify-center text-slate-700 shrink-0 shadow-sm">
                                 <i data-lucide="package" class="w-4 h-4"></i>
                             </div>
                             <div class="min-w-0">
                                 <span class="text-xs sm:text-sm font-bold text-slate-900 block truncate">Doação #{{ $item->id_doacao }}</span>
-                                <span class="text-xs font-medium text-slate-500">{{ \Carbon\Carbon::parse($item->data_intencao)->format('d/m/Y') }}</span>
+                                <span class="text-xs font-medium text-slate-500 block">
+                                    Intenção: {{ \Carbon\Carbon::parse($item->data_intencao)->format('d/m/Y') }}
+                                    @if($item->data_agendamento)
+                                        • Agendado: {{ \Carbon\Carbon::parse($item->data_agendamento)->format('d/m/Y') }} {{ $item->horario_agendamento ? '('.$item->horario_agendamento.')' : '' }}
+                                    @endif
+                                </span>
                             </div>
                         </div>
-                        <span class="px-2.5 py-1 rounded-full text-xs font-bold shrink-0 {{ $item->status_entrega === 'Recebido' ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800' }}">
-                            {{ $item->status_entrega }}
-                        </span>
+                        <div class="flex items-center gap-2 self-end sm:self-auto">
+                            @if($item->status_entrega === 'Pendente')
+                                <details class="relative">
+                                    <summary class="cursor-pointer text-xs bg-brand-50 text-brand-700 border border-brand-200 font-bold px-2.5 py-1 rounded-xl hover:bg-brand-100 transition list-none">
+                                        + Agendar
+                                    </summary>
+                                    <form action="{{ route('doador.agendar', $item->id_doacao) }}" method="POST" class="absolute right-0 mt-2 w-64 bg-white p-3 rounded-2xl shadow-xl border border-slate-200 z-20 space-y-2">
+                                        @csrf
+                                        <span class="block text-xs font-bold text-slate-700">Agendar Entrega</span>
+                                        <input type="date" name="data_agendamento" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5">
+                                        <select name="horario_agendamento" required class="w-full text-xs bg-slate-50 border border-slate-300 rounded-xl px-2.5 py-1.5">
+                                            <option value="Manhã (08:00 às 12:00)">Manhã (08:00 - 12:00)</option>
+                                            <option value="Tarde (13:00 às 17:00)">Tarde (13:00 - 17:00)</option>
+                                        </select>
+                                        <button type="submit" class="w-full text-xs bg-brand-600 text-white font-bold py-1.5 rounded-xl hover:bg-brand-700 transition">
+                                            Confirmar Horário
+                                        </button>
+                                    </form>
+                                </details>
+                            @endif
+                            <span class="px-2.5 py-1 rounded-full text-xs font-bold shrink-0 
+                                {{ $item->status_entrega === 'Recebido' ? 'bg-emerald-100 text-emerald-800' : '' }}
+                                {{ $item->status_entrega === 'Agendado' ? 'bg-blue-100 text-blue-800' : '' }}
+                                {{ $item->status_entrega === 'Pendente' ? 'bg-amber-100 text-amber-800' : '' }}">
+                                {{ $item->status_entrega }}
+                            </span>
+                        </div>
                     </div>
                 @endforeach
             </div>

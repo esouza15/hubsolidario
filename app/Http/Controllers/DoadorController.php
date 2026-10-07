@@ -41,6 +41,8 @@ class DoadorController extends Controller
             'categoria' => 'required|in:Alimento Não Perecível,Agasalho,Calçado,Outro',
             'subcategoria' => 'required|string|max:100',
             'id_instituicao' => 'required|exists:tb_instituicao,id_instituicao',
+            'data_agendamento' => 'nullable|date',
+            'horario_agendamento' => 'nullable|string|max:50',
         ]);
 
         $doador = null;
@@ -51,11 +53,15 @@ class DoadorController extends Controller
                 ['nome' => $validated['nome'], 'celular' => $validated['celular']]
             );
 
-            // 2. Cria o cabeçalho da doação (Doacao) com status Pendente
+            $status = !empty($validated['data_agendamento']) ? 'Agendado' : 'Pendente';
+
+            // 2. Cria o cabeçalho da doação (Doacao)
             $doacao = Doacao::create([
                 'id_doador' => $doador->id_doador,
                 'data_intencao' => now()->toDateString(),
-                'status_entrega' => 'Pendente',
+                'data_agendamento' => $validated['data_agendamento'] ?? null,
+                'horario_agendamento' => $validated['horario_agendamento'] ?? null,
+                'status_entrega' => $status,
             ]);
 
             // 3. Registra o item inicial associado ao ponto de coleta com match
@@ -75,5 +81,27 @@ class DoadorController extends Controller
         }
 
         return redirect()->route('doador.index')->with('success', 'Intenção de doação registrada com sucesso! Obrigado pelo apoio.');
+    }
+
+    /**
+     * Submete / Atualiza o agendamento logístico de uma doação existente
+     */
+    public function agendar(Request $request, $id)
+    {
+        $validated = $request->validate([
+            'data_agendamento' => 'required|date',
+            'horario_agendamento' => 'required|string|max:50',
+        ]);
+
+        DB::transaction(function () use ($id, $validated) {
+            $doacao = Doacao::findOrFail($id);
+            $doacao->update([
+                'data_agendamento' => $validated['data_agendamento'],
+                'horario_agendamento' => $validated['horario_agendamento'],
+                'status_entrega' => 'Agendado',
+            ]);
+        });
+
+        return redirect()->route('doador.index')->with('success', 'Agendamento logístico realizado com sucesso!');
     }
 }

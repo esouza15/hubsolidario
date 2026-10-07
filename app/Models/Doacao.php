@@ -17,11 +17,14 @@ class Doacao extends Model
     protected $fillable = [
         'id_doador',
         'data_intencao',
+        'data_agendamento',
+        'horario_agendamento',
         'status_entrega',
     ];
 
     protected $casts = [
         'data_intencao' => 'date',
+        'data_agendamento' => 'date',
     ];
 
     /**
