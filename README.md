@@ -7,6 +7,8 @@
 > **Localização:** Campo Grande / MS
 > 
 > **Apoio Acadêmico:** Projeto Integrador – Curso Superior de Tecnologia da Informação (UFMS Digital) AGEAD
+> 
+> **Repositório Github:** Acesse em https://github.com/esouza15/hubsolidario
 
 ## Sobre o Projeto
 
