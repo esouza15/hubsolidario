@@ -15,7 +15,7 @@
         <span id="alerta-erro-texto">{{ session('error') }}</span>
     </div>
 
-    <!-- Banner de Congelamento Módulo Triagem (Visitantes / Guest) -->
+    <!-- Banner de Congelamento Módulo Triagem (Visitantes) -->
     @guest
         <div onclick="openAuthModal('register')" class="cursor-pointer bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-4 text-white shadow-md flex items-center justify-between gap-3 hover:brightness-105 active:scale-[0.99] transition group">
             <div class="flex items-center gap-3">
@@ -97,7 +97,7 @@
 
     <hr class="border-slate-200 my-2">
 
-    <!-- FASE 2: Triagem Tátil & Entrada no Estoque -->
+    <!-- FASE 2: Triagem Tátil / Entrada no Estoque -->
     <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-5">
         <div class="flex items-center justify-between border-b border-slate-100 pb-3">
             <div>
@@ -117,7 +117,7 @@
                 @php
                     $itemInicial = $doacao?->itens?->first();
                 @endphp
-                <!-- Linha 1: Identificação do Doador & Data do Recebimento -->
+                <!-- Linha 1: Identificação do Doador e Data do Recebimento -->
                 <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
                     <div class="text-xs sm:text-sm text-slate-900 leading-tight">
                         <span id="banner-id-doacao" class="font-extrabold text-slate-900">Doação #{{ $doacao?->id_doacao }}</span>
@@ -176,7 +176,7 @@
             @csrf
             <input type="hidden" name="id_doacao" id="input_id_doacao" value="{{ $doacao->id_doacao ?? '' }}">
 
-            <!-- Container de Campos com Controle de Enable/Disable (Modo Congelado Por Padrão se Sem Lote) -->
+            <!-- Container de Campos com Controle de Ativado/Desativado (Modo Congelado Por Padrão se Sem Lote) -->
             <fieldset id="fieldset-fase2" class="space-y-5 transition-all duration-300 {{ isset($doacao) && $doacao ? '' : 'opacity-50 pointer-events-none' }}" {{ isset($doacao) && $doacao ? '' : 'disabled="disabled"' }}>
 
                 <!-- Ponto de Destino / Instituição -->
@@ -285,7 +285,7 @@
 
             </fieldset>
 
-            <!-- Botão de Ação Primária da Fase 2 (Controle de Clique Único e Submissão) -->
+            <!-- Botão de ação primária da Fase 2 (Controle de Clique Único e Submissão) -->
             <div class="pt-2">
                 <button type="submit" 
                     id="btn-integrar-estoque" 
@@ -406,7 +406,7 @@
     }
 
     /**
-     * Ativa os campos da Fase 2 e popula o Banner Informativo do Doador (LGPD)
+     * Ativa os campos da Fase 2 e popula o Banner Informativo do Doador
      */
     function ativarLoteFase2(idDoacao, doadorNome = '', doadorNomeFormatado = '', categoriaDeclarada = '', subcategoriaDeclarada = '', dataRecebimento = '') {
         loteAtivoId = idDoacao;
@@ -451,7 +451,7 @@
     }
 
     /**
-     * DIRETRIZ 1: Submissão do Formulário com Prevenção de Duplicidade (Prevent Double-Click) e Reset Completo
+     * DIRETRIZ 1: Submissão do Formulário com Prevenção de Duplicidade e Reset Completo
      */
     async function submeterFormularioFase2(event) {
         event.preventDefault();

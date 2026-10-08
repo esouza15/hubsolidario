@@ -107,7 +107,7 @@ class TriagemController extends Controller
 
         $doacao = Doacao::findOrFail($validated['id_doacao']);
 
-        // Verificação de Idempotência / Integridade Transacional:
+        // Verificação de Idempotência e Integridade Transacional:
         // Se a doação já tiver o status 'Triado' ou 'Concluído', rejeita a duplicação
         if (in_array($doacao->status_entrega, ['Triado', 'Concluído'])) {
             if ($request->wantsJson() || $request->ajax()) {

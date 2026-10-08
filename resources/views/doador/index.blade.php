@@ -3,7 +3,7 @@
 @section('content')
 <div class="space-y-4">
 
-    <!-- Card de Boas-Vindas & Demanda Ativa -->
+    <!-- Card de Boas-vindas e Demanda Ativa -->
     <div class="bg-gradient-to-br from-emerald-600 to-teal-700 rounded-3xl p-5 text-white shadow-lg shadow-emerald-900/10">
         <div class="flex items-start justify-between gap-3">
             <div>
@@ -30,7 +30,7 @@
         </div>
     </div>
 
-    <!-- Card Banner de Alerta se Estiver Congelado (Visitante / Guest) -->
+    <!-- Card Banner de Alerta se Estiver Congelado (Visitante) -->
     @guest
         <div onclick="openAuthModal('register')" class="cursor-pointer bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-4 text-white shadow-md flex items-center justify-between gap-3 hover:brightness-105 active:scale-[0.99] transition group">
             <div class="flex items-center gap-3">
@@ -122,7 +122,7 @@
                 <input type="text" name="subcategoria" required placeholder="Ex: 2 jaquetas de moletom, 5kg de arroz" class="w-full bg-slate-50 border border-slate-300 rounded-2xl px-4 py-3 text-sm font-medium text-slate-900 placeholder-slate-400 focus:ring-2 focus:ring-brand-500 focus:outline-none transition">
             </div>
 
-            <!-- Agendamento Logístico (Estágio Intermediário) -->
+            <!-- Agendamento de Coleta (Estágio Intermediário) -->
             <div class="space-y-3 pt-1">
                 <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
                     <i data-lucide="calendar" class="w-4 h-4 text-brand-600"></i>

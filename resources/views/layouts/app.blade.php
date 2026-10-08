@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{{ $title ?? 'HubSolidário' }}</title>
 
-    <!-- PWA & Configurações de Ícone para Tela Inicial (iOS/Android/Desktop) -->
+    <!-- PWA e Configurações de Ícone para Tela Inicial (iOS/Android/Desktop) -->
     <link rel="manifest" href="{{ asset('manifest.json') }}">
     <meta name="theme-color" content="#16a34a">
     <meta name="mobile-web-app-capable" content="yes">
@@ -45,7 +45,7 @@
 </head>
 <body class="h-full flex flex-col font-sans text-slate-800 antialiased selection:bg-brand-500 selection:text-white">
 
-    <!-- Header Mobile / Barra Superior Refatorada -->
+    <!-- Header Mobile / Barra Superior -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur border-b border-slate-200 px-4 py-3.5 shadow-sm">
         <div class="max-w-md mx-auto flex items-center justify-between gap-3">
             <div class="flex items-center space-x-3 min-w-0 flex-1">
@@ -121,7 +121,7 @@
         @yield('content')
     </main>
 
-    <!-- Bottom Navigation Bar Refatorada (Mobile-First) -->
+    <!-- Bottom Navigation Bar (Mobile-First) -->
     <nav class="fixed bottom-0 inset-x-0 bg-white/95 backdrop-blur border-t border-slate-200 pt-2 pb-[max(0.75rem,env(safe-area-inset-bottom))] px-4 z-40 md:hidden shadow-lg">
         <div class="max-w-md mx-auto grid grid-cols-3 items-center">
             
