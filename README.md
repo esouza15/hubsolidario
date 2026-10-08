@@ -1,59 +1,108 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# HubSolidário – Plataforma de Gestão de Doações
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+> **Iniciativa:** Esthefison Souza (Projeto Integrador - 2026)
+> 
+> **Instituição Beneficiada:** Instituto Musical e Artístico Sol do Pantanal
+> 
+> **Localização:** Campo Grande / MS
+> 
+> **Apoio Acadêmico:** Projeto Integrador – Curso Superior de Tecnologia da Informação (UFMS Digital) AGEAD
 
-## About Laravel
+## Sobre o Projeto
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+O **HubSolidário** é uma aplicação web concebida para centralizar, organizar e rastrear o fluxo de arrecadação, triagem e controle de inventário de doações físicas (vestuários, agasalhos e alimentos não perecíveis).
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+A solução substitui os controles analógicos e registros manuais historicamente mantidos no **Instituto Musical e Artístico Sol do Pantanal**, eliminando a assimetria de informações que provocava o acúmulo de itens de baixa procura e o desabastecimento de mantimentos prioritários destinados às famílias em situação de vulnerabilidade e insegurança alimentar.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## Tech Stack & Arquitetura
 
-## Learning Laravel
+O sistema adota o padrão monolítico **Model-View-Controller (MVC)**, focado em eficiência operacional, segurança transacional e navegação fluida em dispositivos móveis (*Mobile-First*):
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+- **Linguagem & Framework:** PHP 8.2+ / Laravel 12 (Gerenciamento de rotas, ORM Eloquent, transações seguras)
+  
+- **Banco de Dados:** MySQL (Garantia de integridade referencial e conformidade ACID)
+  
+- **Front-end & Views:** Blade Engine + Tailwind CSS (Componentes responsivos e leves)
+  
+- **Experiência do Usuário:** PWA (Progressive Web App) para acesso otimizado em smartphones
+  
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+## Funcionalidades Principais (Escopo do Sistema)
 
-## Laravel Sponsors
+- **Controle de Entidades e Doadores:** Cadastro de doadores, consulta de histórico e gestão de instituições parceiras.
+  
+- **Gestão de Intenções de Doação:** Registro das ofertas de alimentos e roupas com controle de quantidade e acompanhamento do status de entrega.
+  
+- **Módulo de Triagem Visual:** Interface de entrada rápida de itens com seletores táticos padronizados por categoria, subcategoria, tamanho e data de validade.
+  
+- **Match Solidário Direto:** Cruzamento dinâmico entre as ofertas cadastradas e as demandas urgentes de alimentos e agasalhos registradas.
+  
+- **Controle de Inventário e Demandas:** Atualização e acompanhamento em tempo real do estoque físico de mantimentos.
+  
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## Guia de Uso e Instalação (Usuário Final / Voluntário)
 
-### Premium Partners
+O HubSolidário é uma aplicação web leve e responsiva, acessível diretamente via navegador ou instalável como um aplicativo Web no smartphone (PWA).
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 1. Acesso via Navegador
 
-## Contributing
+1. Acesse o endereço web da aplicação em:
+  
+  👉 https://hubsolidario.remotoagencia.com.br/
+  
+2. Efetue login com as suas credenciais de doador, voluntário ou instituição parceira clicando no botão **"Entrar / Cadastrar-se"** no canto superior direito.
+  
+3. Escolha seu perfil:
+  
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+- **Doador:** Para quem quer apoiar causas.
+  
+- **Agente de Triagem:** Para voluntários da instituição.
+  
 
-## Code of Conduct
+#### Para testar a aplicação, use os seguintes perfis pré-cadastrados:
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+- **gestortest**, para testar o painel administrativo:
+  
+  - gestortest@email.com.br no campo E-mail registrado
+  - 12345678 no campo Sua Senha.
+  - OBS: este tem acesso a todos os ambientes.
 
-## Security Vulnerabilities
+- **agentetri**, para testar o ambiente de triagem:
+  
+  - agentetri@email.com.br
+  - 12345678 no campo Sua Senha.
+- **aristoteles**, para testar o ambiente do doador:
+  
+  - aristoteles@email.com.br
+  - 12345678 no campo Sua Senha.
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### 2. Adicionar à Tela Inicial (Instalação PWA no Smartphone)
 
-## License
+Para utilizar o sistema nos mutirões de triagem física sem a barra de navegação do browser:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+- **Android (Google Chrome):**
+  
+
+1. Abra o link do sistema no Chrome.
+  
+2. Toque no menu de três pontos (`⋮`) no canto superior direito.
+  
+3. Selecione **"Adicionar à tela inicial"** ou **"Instalar aplicativo"**.
+  
+
+- **iOS / iPhone (Safari):**
+  
+
+1. Abra o link no Safari.
+  
+2. Toque no botão de **Compartilhar** (ícone do quadrado com a seta para cima).
+  
+3. Role as opções e selecione **"Adicionar à Tela de Início"**.
+  
+
+## Licença
+
+Este projeto está licenciado sob a [Licença](./LICENCE.md).
+
+Consulte o arquivo [LICENCE.md](./LICENCE.md) para mais detalhes.
