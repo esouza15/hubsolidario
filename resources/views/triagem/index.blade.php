@@ -15,6 +15,24 @@
         <span id="alerta-erro-texto">{{ session('error') }}</span>
     </div>
 
+    <!-- Banner de Congelamento Módulo Triagem (Visitantes / Guest) -->
+    @guest
+        <div onclick="openAuthModal('register')" class="cursor-pointer bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-4 text-white shadow-md flex items-center justify-between gap-3 hover:brightness-105 active:scale-[0.99] transition group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
+                    <i data-lucide="lock" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-wider text-amber-100">Módulo de Triagem Congelado</h4>
+                    <p class="text-xs font-bold text-white leading-tight mt-0.5">Faça cadastro/login para liberar a recepção física e a especificação de doações.</p>
+                </div>
+            </div>
+            <span class="px-3.5 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shadow group-hover:bg-amber-50 transition shrink-0">
+                Descongelar
+            </span>
+        </div>
+    @endguest
+
     <!-- FASE 1: Fila de Recepção Física no Ponto de Coleta -->
     <div class="bg-white rounded-3xl p-5 border border-slate-200 shadow-sm space-y-3">
         <div class="flex items-center justify-between">
@@ -62,10 +80,10 @@
                         </div>
                         <button type="button" 
                             id="btn-confirmar-chegada-{{ $itemAgendado->id_doacao }}"
-                            onclick="confirmarChegadaFisica({{ $itemAgendado->id_doacao }})"
+                            @guest onclick="openAuthModal('register')" @else onclick="confirmarChegadaFisica({{ $itemAgendado->id_doacao }})" @endguest
                             class="py-2 px-3.5 bg-emerald-600 hover:bg-emerald-700 active:scale-[0.98] text-white font-extrabold text-xs rounded-xl shadow-md shadow-emerald-600/20 flex items-center justify-center gap-1.5 transition shrink-0 self-end sm:self-auto">
-                            <i data-lucide="check-circle" class="w-4 h-4"></i>
-                            <span>Confirmar Chegada Física</span>
+                            <i data-lucide="{{ auth()->check() ? 'check-circle' : 'lock' }}" class="w-4 h-4"></i>
+                            <span>{{ auth()->check() ? 'Confirmar Chegada Física' : 'Descongelar para Receber' }}</span>
                         </button>
                     </div>
                 @endforeach

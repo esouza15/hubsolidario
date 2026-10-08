@@ -22,7 +22,35 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'perfil',
     ];
+
+    /**
+     * Métodos de Verificação de Perfil
+     */
+    public function isDoador(): bool
+    {
+        return ($this->perfil ?? 'doador') === 'doador';
+    }
+
+    public function isAgenteTriagem(): bool
+    {
+        return ($this->perfil ?? 'doador') === 'agente_triagem';
+    }
+
+    public function isGestor(): bool
+    {
+        return ($this->perfil ?? 'doador') === 'gestor';
+    }
+
+    public function getPerfilLabelAttribute(): string
+    {
+        return match ($this->perfil ?? 'doador') {
+            'gestor' => 'Gestor',
+            'agente_triagem' => 'Triagem',
+            default => 'Doador',
+        };
+    }
 
     /**
      * The attributes that should be hidden for serialization.

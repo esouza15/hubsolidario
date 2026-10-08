@@ -3,6 +3,24 @@
 @section('content')
 <div class="space-y-4">
 
+    <!-- Card Banner de Alerta se Estiver Congelado (Visitante / Guest) -->
+    @guest
+        <div onclick="openAuthModal('register')" class="cursor-pointer bg-gradient-to-r from-amber-500 to-orange-500 rounded-3xl p-4 text-white shadow-md flex items-center justify-between gap-3 hover:brightness-105 active:scale-[0.99] transition group">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-2xl bg-white/20 backdrop-blur flex items-center justify-center shrink-0">
+                    <i data-lucide="lock" class="w-5 h-5 text-white"></i>
+                </div>
+                <div>
+                    <h4 class="text-xs font-black uppercase tracking-wider text-amber-100">Painel de Gestão Congelado</h4>
+                    <p class="text-xs font-bold text-white leading-tight mt-0.5">Faça cadastro/login para liberar o despacho de itens e gestão do estoque.</p>
+                </div>
+            </div>
+            <span class="px-3.5 py-2 rounded-xl bg-white text-amber-900 font-extrabold text-xs shadow group-hover:bg-amber-50 transition shrink-0">
+                Habilitar
+            </span>
+        </div>
+    @endguest
+
     <!-- Cabeçalho da Instituição -->
     <div class="bg-white rounded-3xl p-4 sm:p-5 border border-slate-200 shadow-sm flex items-center justify-between">
         <div class="flex items-center space-x-3">
@@ -132,13 +150,19 @@
                                 </span>
                             </td>
                             <td class="p-3 text-right">
-                                <form action="{{ route('instituicao.despachar', $item->id_item) }}" method="POST" onsubmit="return confirm('Confirmar saída/distribuição deste item à comunidade?');">
-                                    @csrf
-                                    @method('DELETE')
-                                    <button type="submit" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition" title="Distribuir / Dar Saída">
-                                        <i data-lucide="external-link" class="w-4 h-4"></i>
+                                @guest
+                                    <button type="button" onclick="openAuthModal('register')" class="p-2 text-slate-400 hover:text-amber-600 hover:bg-amber-50 rounded-xl transition" title="Faça login para dar saída/despachar">
+                                        <i data-lucide="lock" class="w-4 h-4"></i>
                                     </button>
-                                </form>
+                                @else
+                                    <form action="{{ route('instituicao.despachar', $item->id_item) }}" method="POST" onsubmit="return confirm('Confirmar saída/distribuição deste item à comunidade?');">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="p-2 text-slate-500 hover:text-rose-600 hover:bg-rose-50 rounded-xl transition" title="Distribuir / Dar Saída">
+                                            <i data-lucide="external-link" class="w-4 h-4"></i>
+                                        </button>
+                                    </form>
+                                @endguest
                             </td>
                         </tr>
                     @empty
